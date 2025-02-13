@@ -18,6 +18,7 @@ logger = logging.getLogger(__name__)
         "type": "object",
         "properties": {
             "video_url": {"type": "string", "format": "uri"},
+            "webhook_url": {"type": "string", "format": "uri"},
             "id": {"type": "string"},
         },
         "required": ["video_url"],
