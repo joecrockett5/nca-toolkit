@@ -38,9 +38,13 @@ class S3CompatibleProvider(CloudStorageProvider):
         self.secret_key = os.getenv("S3_SECRET_KEY")
 
     def upload_file(self, file_path: str) -> str:
-        return upload_to_s3(
+        cloud_file_url = upload_to_s3(
             file_path, self.endpoint_url, self.access_key, self.secret_key
         )
+        logger.info(f"File uploaded successfully: {cloud_file_url}")
+        logger.info(f"Deleting local copy at: {file_path}")
+        os.remove(file_path)
+        return cloud_file_url
 
     def download_file(self, file_path: str) -> str:
         return download_from_s3(
@@ -80,4 +84,3 @@ def download_file(cloud_file_path: str, target_path: str) -> str:
     except Exception as e:
         logger.error(f"Error downloading file from cloud storage: {e}")
         raise
-
