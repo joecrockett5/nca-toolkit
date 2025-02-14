@@ -5,7 +5,7 @@ from flask import Blueprint
 from app_utils import *
 from services.authentication import authenticate
 from services.cloud_storage import upload_file
-from services.v1.video.download import download_yt_video
+from services.v1.video.download import download_yt_video, get_cookie_file
 
 v1_video_download_bp = Blueprint("v1_video_download", __name__)
 logger = logging.getLogger(__name__)
@@ -33,7 +33,8 @@ def download(job_id, data):
     logger.info(f"Job {job_id}: Received download request for '{media_url}'")
 
     try:
-        output_file = download_yt_video(media_url, job_id)
+        cookiefile = get_cookie_file(job_id)
+        output_file = download_yt_video(media_url, cookiefile, job_id)
         logger.info(f"Job {job_id}: Video download process completed successfully")
 
         cloud_url = upload_file(output_file)
