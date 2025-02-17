@@ -1,4 +1,5 @@
 import logging
+import os
 
 from flask import Blueprint
 
@@ -41,6 +42,12 @@ def download(job_id, data):
         logger.info(
             f"Job {job_id}: Downloaded video uploaded to cloud storage: {cloud_url}"
         )
+
+        logger.info(
+            f"Job {job_id}: Deleting local copy of new video file, at: {output_file}"
+        )
+        os.remove(output_file)
+        logger.info(f"Job {job_id}: Local copy of new video file deleted")
 
         return cloud_url, "/v1/video/download", 200
 

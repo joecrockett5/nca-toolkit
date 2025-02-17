@@ -51,7 +51,7 @@ def get_cookie_file(job_id: str) -> str:
     """Retrieve the cookie file and return its path."""
     try:
         if os.path.exists(COOKIE_FILE_PATH):
-            return COOKIE_FILE_PATH
+            os.remove(COOKIE_FILE_PATH)
 
         cloud_cookiefile_path = os.getenv("COOKIE_FILE", None)
         if not cloud_cookiefile_path:

@@ -42,8 +42,7 @@ class S3CompatibleProvider(CloudStorageProvider):
             file_path, self.endpoint_url, self.access_key, self.secret_key
         )
         logger.info(f"File uploaded successfully: {cloud_file_url}")
-        logger.info(f"Deleting local copy at: {file_path}")
-        os.remove(file_path)
+
         return cloud_file_url
 
     def download_file(self, file_path: str) -> str:
