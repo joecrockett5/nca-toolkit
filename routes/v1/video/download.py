@@ -44,7 +44,7 @@ def download(job_id, data):
         )
 
         logger.info(
-            f"Job {job_id}: Deleting local copy of new video file, at: {download_output["output_filename"]}"
+            f"Job {job_id}: Deleting local copy of new video file, at: {download_output['output_filename']}"
         )
         os.remove(download_output["output_filename"])
         logger.info(f"Job {job_id}: Local copy of new video file deleted")
