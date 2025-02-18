@@ -15,7 +15,7 @@ COOKIE_FILE_PATH = "/tmp/cookiefile.txt"
 def download_yt_video(yt_url: str, cookiefile_path: str, job_id: str) -> dict[str, str]:
     """Download a video from a URL."""
     ydl_opts = {
-        "format": "bestvideo[height>=1080]+bestaudio/best[height>=1080]",
+        "format": "bestvideo[height<=1080]+bestaudio/best[height<=1080]",
         "outtmpl": f"{STORAGE_PATH}{job_id}.%(ext)s",
         "restrictfilenames": True,
         "cookiefile": cookiefile_path,
