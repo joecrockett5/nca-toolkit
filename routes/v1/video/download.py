@@ -35,21 +35,27 @@ def download(job_id, data):
 
     try:
         cookiefile = get_cookie_file(job_id)
-        output_file = download_yt_video(media_url, cookiefile, job_id)
+        download_output = download_yt_video(media_url, cookiefile, job_id)
         logger.info(f"Job {job_id}: Video download process completed successfully")
 
-        cloud_url = upload_file(output_file)
+        cloud_url = upload_file(download_output["output_filename"])
         logger.info(
             f"Job {job_id}: Downloaded video uploaded to cloud storage: {cloud_url}"
         )
 
         logger.info(
-            f"Job {job_id}: Deleting local copy of new video file, at: {output_file}"
+            f"Job {job_id}: Deleting local copy of new video file, at: {download_output["output_filename"]}"
         )
-        os.remove(output_file)
+        os.remove(download_output["output_filename"])
         logger.info(f"Job {job_id}: Local copy of new video file deleted")
 
-        return cloud_url, "/v1/video/download", 200
+        download_details = {
+            "cloud_url": cloud_url,
+            "height": download_output["height"],
+            "width": download_output["width"],
+        }
+
+        return download_details, "/v1/video/download", 200
 
     except Exception as e:
         logger.error(f"Job {job_id}: Error during video download process - {str(e)}")

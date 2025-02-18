@@ -12,7 +12,7 @@ STORAGE_PATH = "/tmp/"
 COOKIE_FILE_PATH = "/tmp/cookiefile.txt"
 
 
-def download_yt_video(yt_url: str, cookiefile_path: str, job_id: str) -> str:
+def download_yt_video(yt_url: str, cookiefile_path: str, job_id: str) -> dict[str, str]:
     """Download a video from a URL."""
     ydl_opts = {
         "format": "bestvideo[height>=1080]+bestaudio/best[height>=1080]",
@@ -40,7 +40,11 @@ def download_yt_video(yt_url: str, cookiefile_path: str, job_id: str) -> str:
                     f"Output file '{output_filename}' does not exist after download."
                 )
 
-        return output_filename
+        return {
+            "output_filename": output_filename,
+            "height": info.get("height", "Unknown"),
+            "width": info.get("width", "Unknown"),
+        }
 
     except Exception as e:
         logger.error(f"Job {job_id}: Error during video download - {str(e)}")
