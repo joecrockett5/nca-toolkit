@@ -51,6 +51,7 @@ def download(job_id, data):
 
         download_details = {
             "cloud_url": cloud_url,
+            "video_title": download_output["video_title"],
             "height": download_output["height"],
             "width": download_output["width"],
         }

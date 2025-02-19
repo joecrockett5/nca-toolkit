@@ -43,6 +43,7 @@ def download_yt_video(yt_url: str, cookiefile_path: str, job_id: str) -> dict[st
 
         return {
             "output_filename": output_filename,
+            "video_title": info.get("title", "Unknown"),
             "height": info.get("height", "Unknown"),
             "width": info.get("width", "Unknown"),
         }
